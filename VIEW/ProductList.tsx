@@ -39,13 +39,13 @@ export default function ProductList({navigation}: any) {
   };
 
   useEffect(() => {
-    console.log('get in useEffect 1');
+    // console.log('get in useEffect 1');
 
     loadAllData();
   }, []);
 
   function renderItem({item}: any) {
-    console.log('Get in renderItem');
+    // console.log('Get in renderItem');
 
     return (
       <View style={styles.item}>

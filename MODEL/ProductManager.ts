@@ -19,21 +19,28 @@ class ProductManager {
     try {
       const jsonValue = JSON.stringify(product);
       await AsyncStorage.setItem(product.Code.toString(), jsonValue);
-    } catch (e) {}
+    } catch (error) {
+      console.log('Add() error from ProductManager.ts :');
+      console.log(error);
+    }
   }
 
   public async update(product: ProductType) {
     try {
       const jsonValue = JSON.stringify(product);
       await AsyncStorage.mergeItem(product.Code.toString(), jsonValue);
-    } catch (e) {}
+    } catch (error) {
+      console.log('Update() error from ProductManager.ts :');
+      console.log(error);
+    }
   }
 
   public async remove(key: string) {
     try {
       await AsyncStorage.removeItem(key.toString());
-    } catch (e) {
-      return e;
+    } catch (error) {
+      console.log('remove() error from ProductManager.ts :');
+      console.log(error);
     }
   }
 
@@ -44,18 +51,23 @@ class ProductManager {
         await AsyncStorage.removeItem(key);
       });
     } catch (error) {
+      console.log('removeAll() error from ProductManager.ts :');
       console.log(error);
     }
   }
 
   public async getOne(key: number) {
-    return await AsyncStorage.getItem(key.toString());
+    try {
+      return await AsyncStorage.getItem(key.toString());
+    } catch (error) {
+      console.log('getOne() error from ProductManager.ts :');
+      console.log(error);
+    }
   }
 
   public async getAll(): Promise<Array<ProductType>> {
+    let objects: Array<ProductType> = [];
     try {
-      let objects: Array<ProductType> = [];
-
       let keys = await AsyncStorage.getAllKeys();
       let objJSON = await AsyncStorage.multiGet(keys);
 
@@ -65,10 +77,11 @@ class ProductManager {
           objects.push(product);
         });
       }
-      return objects;
-    } catch (e) {
-      return [];
+    } catch (error) {
+      console.log('gelAll() error from ProductManager.ts :');
+      console.log(error);
     }
+    return objects;
   }
 }
 
